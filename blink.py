@@ -68,8 +68,17 @@ def output_handler(output_folder):
     show_default=True,
     help="webpage request timeout in seconds.",
 )
+@click.option(
+    "-f",
+    "--format",
+    "file_format",
+    type=str,
+    default="png",
+    show_default=True,
+    help="output file format.",
+)
 @check_ssl
-def main(input_file, output_folder, window_size, time_out):
+def main(input_file, output_folder, window_size, time_out, file_format):
     output_location = output_handler(output_folder)
 
     options = webdriver.ChromeOptions()
@@ -92,7 +101,7 @@ def main(input_file, output_folder, window_size, time_out):
             page_counter += 1
             print("[%d/%d] Opening %s" % (page_counter, page_amount, url))
             driver.get("https://" + url)
-            driver.save_screenshot(output_location + "/" + url + ".png")
+            driver.save_screenshot(output_location + "/" + url + "." + file_format)
         except:
             print("[!] Couldn't save %s, skipping..." % (url))
 
